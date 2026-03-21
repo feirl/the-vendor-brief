@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Vendor Brief — Rosetta Brands</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --charcoal: #2c2932;
+  --grey: #525252;
+  --orange: #ef7c1f;
+  --pink: #e35185;
+  --pink-light: #f6b5eb;
+  --pink-soft: #fdf0f8;
+  --orange-soft: #fff7ee;
+  --white: #ffffff;
+  --off-white: #fafafa;
+  --text-primary: #2c2932;
+  --text-secondary: #525252;
+  --text-muted: #8a8a8a;
+  --border-light: #eee;
+}
+
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-primary);
+  background: var(--white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+section {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-inner {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 80px 48px;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.3rem, 2.5vw, 1.6rem); }
+h4 { font-size: 1.1rem; font-weight: 600; }
+
+p { font-size: clamp(0.95rem, 1.2vw, 1.1rem); line-height: 1.7; color: var(--text-secondary); }
+
+.label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pink);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* NAV DOTS */
+.nav-dots {
+  position: fixed; right: 28px; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 12px; z-index: 100;
+}
+.nav-dot {
+  width: 10px; height: 10px; border-radius: 50%; background: var(--charcoal);
+  opacity: 0.15; cursor: pointer; transition: all 0.3s; border: none;
+}
+.nav-dot:hover { opacity: 0.5; transform: scale(1.3); }
+.nav-dot.active { opacity: 1; background: var(--orange); transform: scale(1.3); }
+.nav-dot.on-dark { background: var(--white); opacity: 0.25; }
+.nav-dot.on-dark:hover { opacity: 0.6; }
+.nav-dot.on-dark.active { background: var(--orange); opacity: 1; }
+
+/* FIXED LOGO */
+.logo-fixed {
+  position: fixed; top: 28px; left: 28px; z-index: 99; height: 36px;
+  opacity: 0; transition: opacity 0.4s;
+}
+.logo-fixed.show { opacity: 1; }
+
+/* ═══ HERO ═══ */
+.hero { background: var(--charcoal); color: var(--white); }
+.hero::before {
+  content: ''; position: absolute; top: -30%; right: -10%; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(239,124,31,0.1) 0%, transparent 70%); pointer-events: none;
+}
+.hero .section-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: center;
+  max-width: 100%; padding: 0; position: relative; z-index: 2;
+}
+.hero-content {
+  display: flex; flex-direction: column; gap: 28px;
+  padding: 80px 40px 80px calc(max(48px, (100vw - 1120px) / 2));
+}
+.hero-logo { height: 44px; align-self: flex-start; }
+.hero-series-name {
+  font-family: 'DM Sans', sans-serif; font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; color: var(--white);
+}
+.hero-series-name span {
+  display: block;
+  background: linear-gradient(135deg, var(--orange), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-tagline {
+  font-size: clamp(1rem, 1.5vw, 1.2rem); color: rgba(255,255,255,0.6);
+  max-width: 500px; line-height: 1.6; font-weight: 300;
+}
+.hero-meta {
+  display: flex; gap: 32px; flex-wrap: wrap; padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
+.hero-meta-label {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3); font-weight: 500;
+}
+.hero-meta-value {
+  font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+  font-weight: 600; color: var(--white);
+}
+.hero-mockup-wrap {
+  position: relative; height: 100vh; display: flex; align-items: center;
+  justify-content: center; padding: 60px 40px 60px 20px;
+}
+.hero-mockup {
+  width: 100%; max-width: 480px; object-fit: contain;
+}
+
+/* ═══ WHAT IS IT ═══ */
+.what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.what-left h2 { margin-top: 16px; margin-bottom: 24px; }
+.what-points { display: flex; flex-direction: column; gap: 20px; }
+.what-point { display: flex; gap: 16px; align-items: flex-start; }
+.what-point-icon {
+  flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.what-point-icon--orange { background: var(--orange-soft); color: var(--orange); }
+.what-point-icon--pink { background: var(--pink-soft); color: var(--pink); }
+.what-point-icon svg { width: 20px; height: 20px; }
+.what-point p { font-size: 1rem; line-height: 1.65; }
+.what-point strong { color: var(--text-primary); font-weight: 600; }
+.what-callout {
+  background: var(--charcoal); color: var(--white); padding: 48px; border-radius: 16px; position: relative;
+}
+.what-callout::before {
+  content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border-radius: 18px; background: linear-gradient(135deg, var(--orange), var(--pink)); z-index: -1;
+}
+.what-callout h3 { color: var(--white); margin-bottom: 16px; font-size: 1.4rem; }
+.what-callout p { color: rgba(255,255,255,0.7); font-size: 1rem; }
+
+/* ═══ WHY ═══ */
+.why-section { background: var(--off-white); }
+.why-header { text-align: center; margin-bottom: 56px; }
+.why-header h2 { margin-top: 12px; }
+.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.why-card {
+  background: var(--white); border-radius: 14px; padding: 32px 28px;
+  border: 1px solid var(--border-light); transition: transform 0.3s, box-shadow 0.3s;
+}
+.why-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
+.why-card-num {
+  font-family: 'DM Sans', sans-serif; font-size: 2.4rem; font-weight: 800;
+  color: var(--orange); opacity: 0.3; line-height: 1; margin-bottom: 12px;
+}
+.why-card h4 { margin-bottom: 10px; }
+.why-card p { font-size: 0.9rem; line-height: 1.6; }
+.why-grid-bottom { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 24px; }
+
+/* ═══ FORMAT ═══ */
+.format-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+.format-left h2 { margin-top: 12px; margin-bottom: 8px; }
+.format-subtitle {
+  font-family: 'DM Sans', sans-serif; font-size: 1.2rem; font-weight: 600;
+  color: var(--orange); margin-bottom: 28px;
+}
+.format-list { display: flex; flex-direction: column; gap: 20px; }
+.format-item { display: flex; gap: 14px; align-items: flex-start; }
+.format-bullet {
+  flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange); margin-top: 8px;
+}
+.format-item strong { color: var(--text-primary); }
+.format-tone-box {
+  background: linear-gradient(135deg, var(--pink), var(--orange));
+  border-radius: 16px; padding: 48px 40px; color: var(--white);
+}
+.format-tone-box .label { color: rgba(255,255,255,0.6); }
+.format-tone-box h3 { font-size: 1.8rem; color: var(--white); margin-top: 12px; margin-bottom: 16px; }
+.format-tone-box p { color: rgba(255,255,255,0.85); font-style: italic; }
+
+/* ═══ CADENCE ═══ */
+.cadence-section { background: var(--charcoal); color: var(--white); }
+.cadence-header { text-align: center; margin-bottom: 56px; }
+.cadence-header .label { color: var(--orange); }
+.cadence-header h2 { color: var(--white); margin-top: 12px; }
+.cadence-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.cadence-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px; padding: 28px 24px; position: relative; transition: background 0.3s;
+}
+.cadence-card:hover { background: rgba(255,255,255,0.07); }
+.cadence-week {
+  font-family: 'DM Sans', sans-serif; font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); margin-bottom: 8px;
+}
+.cadence-card h4 { color: var(--white); font-size: 1.15rem; margin-bottom: 12px; }
+.cadence-card p { color: rgba(255,255,255,0.55); font-size: 0.88rem; line-height: 1.55; }
+.cadence-arrow {
+  position: absolute; right: -14px; top: 50%; transform: translateY(-50%);
+  color: rgba(255,255,255,0.15); z-index: 2;
+}
+.cadence-arrow svg { width: 20px; height: 20px; }
+
+/* ═══ GOALS ═══ */
+.goals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.goals-word {
+  font-family: 'DM Sans', sans-serif; font-size: 5rem; font-weight: 800;
+  letter-spacing: -0.04em; line-height: 1;
+  background: linear-gradient(135deg, var(--orange), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 24px;
+}
+.goals-list { display: flex; flex-direction: column; gap: 14px; }
+.goals-list-item { display: flex; gap: 12px; align-items: flex-start; }
+.goals-check {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 6px;
+  background: var(--orange-soft); display: flex; align-items: center;
+  justify-content: center; margin-top: 2px; color: var(--orange);
+}
+.goals-check svg { width: 12px; height: 12px; }
+.goals-list-item p { font-size: 0.95rem; }
+.metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.metric-card { background: var(--off-white); border-radius: 14px; padding: 28px 24px; text-align: center; }
+.metric-value {
+  font-family: 'DM Sans', sans-serif; font-size: 2rem; font-weight: 800;
+  color: var(--charcoal); margin-bottom: 4px;
+}
+.metric-label { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+
+/* ═══ EPISODES ═══ */
+.episodes-section { background: var(--off-white); }
+.episodes-header { text-align: center; margin-bottom: 48px; }
+.episodes-header h2 { margin-top: 12px; }
+.episode-featured {
+  background: var(--white); border-radius: 16px; padding: 40px; border: 2px solid var(--orange);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-bottom: 28px;
+}
+.episode-featured-badge {
+  font-family: 'DM Sans', sans-serif; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--white);
+  background: var(--orange); padding: 4px 12px; border-radius: 4px;
+  display: inline-block; margin-bottom: 12px;
+}
+.episode-featured h3 { font-size: 1.35rem; margin-bottom: 12px; line-height: 1.3; }
+.episode-featured p { font-size: 0.92rem; }
+.episode-featured-meta { display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap; }
+.episode-featured-meta-item { font-size: 0.85rem; color: var(--text-muted); }
+.episode-featured-meta-item strong { color: var(--text-primary); }
+.episode-questions { display: flex; flex-direction: column; gap: 10px; }
+.episode-q {
+  font-size: 0.88rem; color: var(--text-secondary); padding-left: 16px;
+  border-left: 2px solid var(--orange); line-height: 1.5;
+}
+.episodes-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.episode-card {
+  background: var(--white); border-radius: 12px; padding: 24px 20px;
+  border: 1px solid var(--border-light); transition: transform 0.3s;
+}
+.episode-card:hover { transform: translateY(-3px); }
+.episode-card--live { border-color: var(--pink); background: linear-gradient(135deg, var(--pink-soft), var(--white)); }
+.episode-card-month {
+  font-family: 'DM Sans', sans-serif; font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--pink); margin-bottom: 8px;
+}
+.episode-card h4 { font-size: 0.92rem; line-height: 1.35; margin-bottom: 8px; }
+.episode-card p { font-size: 0.78rem; line-height: 1.5; color: var(--text-muted); }
+.episode-live-badge {
+  display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.65rem;
+  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  background: var(--pink); color: var(--white); padding: 2px 8px; border-radius: 3px; margin-bottom: 6px;
+}
+
+/* ═══ PRODUCTION ═══ */
+.production-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.production-left h2 { margin-top: 12px; margin-bottom: 32px; }
+.role-block { margin-bottom: 28px; }
+.role-name { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+.role-tag {
+  display: inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 2px 8px; border-radius: 3px; margin-left: 8px; vertical-align: middle;
+}
+.role-tag--orange { background: var(--orange-soft); color: var(--orange); }
+.role-tag--pink { background: var(--pink-soft); color: var(--pink); }
+.role-desc { font-size: 0.9rem; color: var(--text-secondary); margin-top: 4px; }
+.output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.output-item {
+  background: var(--off-white); border-radius: 10px; padding: 20px 18px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.output-icon {
+  flex-shrink: 0; width: 32px; height: 32px; border-radius: 8px;
+  background: var(--orange-soft); display: flex; align-items: center;
+  justify-content: center; color: var(--orange);
+}
+.output-icon svg { width: 16px; height: 16px; }
+.output-icon--pink { background: var(--pink-soft); color: var(--pink); }
+.output-item p { font-size: 0.88rem; line-height: 1.45; color: var(--text-secondary); }
+.output-item strong { color: var(--text-primary); }
+.channels-list { margin-top: 28px; }
+.channels-list h3 { margin-bottom: 16px; font-size: 1.2rem; }
+.channel-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.channel-tag { font-size: 0.8rem; font-weight: 500; padding: 6px 16px; border-radius: 20px; background: var(--charcoal); color: var(--white); }
+.channel-tag--outline { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-light); }
+
+/* ═══ TIMELINE ═══ */
+.timeline-section { background: var(--charcoal); color: var(--white); }
+.timeline-header { text-align: center; margin-bottom: 56px; }
+.timeline-header .label { color: var(--orange); }
+.timeline-header h2 { color: var(--white); margin-top: 12px; }
+.timeline-track { position: relative; display: flex; flex-direction: column; }
+.timeline-track::before {
+  content: ''; position: absolute; left: 24px; top: 0; bottom: 0;
+  width: 2px; background: rgba(255,255,255,0.08);
+}
+.timeline-item { display: flex; gap: 28px; align-items: flex-start; padding: 16px 0; position: relative; }
+.timeline-dot {
+  flex-shrink: 0; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--orange); margin-top: 4px; margin-left: 19px; position: relative; z-index: 2;
+}
+.timeline-dot--muted { background: rgba(255,255,255,0.2); }
+.timeline-dot--pink { background: var(--pink); }
+.timeline-content { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
+.timeline-event { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1rem; color: var(--white); }
+.timeline-event--highlight { font-size: 1.05rem; color: var(--orange); }
+.timeline-event--pink { color: var(--pink); }
+.timeline-date { font-size: 0.85rem; color: rgba(255,255,255,0.4); white-space: nowrap; }
+.timeline-tag {
+  display: inline-block; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-left: 8px; vertical-align: middle;
+}
+.timeline-tag--orange { background: rgba(239,124,31,0.2); color: var(--orange); }
+.timeline-tag--pink { background: rgba(227,81,133,0.2); color: var(--pink); }
+
+/* ═══ ACTION PLAN ═══ */
+.action-header { text-align: center; margin-bottom: 56px; }
+.action-header h2 { margin-top: 12px; }
+.action-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.action-col-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+  padding-bottom: 16px; border-bottom: 2px solid var(--charcoal);
+}
+.action-col-header--orange { border-bottom-color: var(--orange); }
+.action-col-header--pink { border-bottom-color: var(--pink); }
+.action-col-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.action-col-icon--orange { background: var(--orange-soft); color: var(--orange); }
+.action-col-icon--pink { background: var(--pink-soft); color: var(--pink); }
+.action-col-icon svg { width: 18px; height: 18px; }
+.action-col-title { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.15rem; }
+.action-list { display: flex; flex-direction: column; gap: 14px; }
+.action-item { display: flex; gap: 12px; align-items: flex-start; }
+.action-checkbox {
+  flex-shrink: 0; width: 20px; height: 20px; border: 2px solid var(--border-light);
+  border-radius: 5px; margin-top: 2px;
+}
+.action-item p { font-size: 0.92rem; line-height: 1.55; }
+.action-item strong { color: var(--text-primary); }
+.action-footer { text-align: center; margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border-light); }
+.action-footer p { font-size: 0.88rem; color: var(--text-muted); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 1200px) {
+  .hero-content { padding-left: 48px; }
+}
+@media (max-width: 1024px) {
+  .section-inner { padding: 60px 32px; }
+  .hero .section-inner { grid-template-columns: 1fr; padding: 0; }
+  .hero-content { padding: 60px 32px; }
+  .hero-mockup-wrap { display: none; }
+  .what-grid, .format-grid, .goals-grid, .production-grid, .episode-featured { grid-template-columns: 1fr; gap: 40px; }
+  .why-grid { grid-template-columns: 1fr 1fr; }
+  .cadence-grid { grid-template-columns: 1fr 1fr; }
+  .cadence-arrow { display: none; }
+  .episodes-grid { grid-template-columns: repeat(3, 1fr); }
+  .nav-dots { display: none; }
+}
+@media (max-width: 768px) {
+  html { scroll-snap-type: y proximity; }
+  section { min-height: auto; }
+  .section-inner { padding: 48px 20px; }
+  .hero-content { padding: 48px 20px; }
+  .why-grid, .why-grid-bottom, .action-columns { grid-template-columns: 1fr; }
+  .cadence-grid { grid-template-columns: 1fr; }
+  .episodes-grid { grid-template-columns: 1fr 1fr; }
+  .output-grid { grid-template-columns: 1fr; }
+  .logo-fixed { display: none; }
+}
+</style>
+</head>
+<body>
+
+<img src="logo.webp" alt="Rosetta Brands" class="logo-fixed" id="logoFixed">
+
+<nav class="nav-dots" id="navDots">
+  <button class="nav-dot active" data-slide="0"></button>
+  <button class="nav-dot" data-slide="1"></button>
+  <button class="nav-dot" data-slide="2"></button>
+  <button class="nav-dot" data-slide="3"></button>
+  <button class="nav-dot" data-slide="4"></button>
+  <button class="nav-dot" data-slide="5"></button>
+  <button class="nav-dot" data-slide="6"></button>
+  <button class="nav-dot" data-slide="7"></button>
+  <button class="nav-dot" data-slide="8"></button>
+  <button class="nav-dot" data-slide="9"></button>
+</nav>
+
+<!-- SLIDE 1 — HERO -->
+<section class="hero" id="slide-0">
+  <div class="section-inner">
+    <div class="hero-content">
+      <img src="logo-light.png" alt="Rosetta Brands" class="hero-logo reveal">
+      <div class="hero-series-name reveal reveal-delay-1">The Vendor<br><span>Brief.</span></div>
+      <p class="hero-tagline reveal reveal-delay-2">Behind the scenes, scaling FMCG brands on Amazon. A monthly LinkedIn Live series from Rosetta Brands.</p>
+      <div class="hero-meta reveal reveal-delay-3">
+        <div class="hero-meta-item"><span class="hero-meta-label">Format</span><span class="hero-meta-value">LinkedIn Live</span></div>
+        <div class="hero-meta-item"><span class="hero-meta-label">Duration</span><span class="hero-meta-value">45 Minutes</span></div>
+        <div class="hero-meta-item"><span class="hero-meta-label">Cadence</span><span class="hero-meta-value">Monthly</span></div>
+        <div class="hero-meta-item"><span class="hero-meta-label">Hosts</span><span class="hero-meta-value">Nick Comer &amp; Sophie Smith</span></div>
+        <div class="hero-meta-item"><span class="hero-meta-label">Launch</span><span class="hero-meta-value">May 2026</span></div>
+      </div>
+    </div>
+    <div class="hero-mockup-wrap">
+      <img src="mockup.png" alt="The Vendor Brief LinkedIn Live" class="hero-mockup reveal reveal-delay-4">
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2 — WHAT IS IT -->
+<section class="what-is-it" id="slide-1">
+  <div class="section-inner">
+    <div class="what-grid">
+      <div class="what-left">
+        <span class="label reveal">The Series</span>
+        <h2 class="reveal reveal-delay-1">What exactly is<br>The Vendor Brief?</h2>
+        <div class="what-points">
+          <div class="what-point reveal reveal-delay-2">
+            <div class="what-point-icon what-point-icon--orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            <p><strong>What's really going on underneath</strong> — the thing most brands don't see</p>
+          </div>
+          <div class="what-point reveal reveal-delay-3">
+            <div class="what-point-icon what-point-icon--pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+            <p><strong>Where most brands get it wrong</strong> — and why</p>
+          </div>
+          <div class="what-point reveal reveal-delay-4">
+            <div class="what-point-icon what-point-icon--orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <p><strong>What the brands who are winning</strong> are doing differently</p>
+          </div>
+        </div>
+      </div>
+      <div class="what-right">
+        <div class="what-callout reveal reveal-delay-2">
+          <h3>Thought leadership, not a product pitch.</h3>
+          <p>Each session takes one topic that's costing FMCG brands money on Amazon and unpacks it with depth, honesty, and operational insight. The purpose is to give value first, show deep understanding, and build trust with the people who make the decision to invest in this channel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3 — WHY -->
+<section class="why-section" id="slide-2">
+  <div class="section-inner">
+    <div class="why-header">
+      <span class="label reveal">The Rationale</span>
+      <h2 class="reveal reveal-delay-1">Why The Vendor Brief?</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal"><div class="why-card-num">01</div><h4>Own the FMCG Amazon conversation</h4><p>There is no authoritative voice in the UK doing this. Rosetta Brands has 958+ brands, 8,000+ products, and 6+ years of operational depth. We should own this conversation before someone else does.</p></div>
+      <div class="why-card reveal reveal-delay-1"><div class="why-card-num">02</div><h4>Bring exactly the right people into our world</h4><p>The topic attracts precisely our ICP: Heads of E-commerce, Commercial Directors, MDs and Founders of FMCG brands dealing with Amazon complexity and channel growth pressure.</p></div>
+      <div class="why-card reveal reveal-delay-2"><div class="why-card-num">03</div><h4>Create a repeatable engagement engine</h4><p>One anchor event per month gives us a steady reason to invite people, grow an audience, and turn each session into follow-on content — clips, articles, case studies, and posts.</p></div>
+    </div>
+    <div class="why-grid-bottom">
+      <div class="why-card reveal reveal-delay-3"><div class="why-card-num">04</div><h4>Earn the right to sell</h4><p>Every brand leader who attends leaves knowing Rosetta Brands understands their world better than any agency they've spoken to. That's the foundation for every commercial conversation that follows.</p></div>
+      <div class="why-card reveal reveal-delay-4"><div class="why-card-num">05</div><h4>Learn while we lead</h4><p>By unpacking Amazon FMCG challenges in public, we sharpen our messaging, surface new pain points, and build a content library that feeds the website, sales process, and future episodes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4 — FORMAT -->
+<section class="format-section" id="slide-3">
+  <div class="section-inner">
+    <div class="format-grid">
+      <div class="format-left">
+        <span class="label reveal">The Format</span>
+        <h2 class="reveal reveal-delay-1">How it works</h2>
+        <p class="format-subtitle reveal reveal-delay-1">45-Minute LinkedIn Live</p>
+        <div class="format-list">
+          <div class="format-item reveal reveal-delay-2"><div class="format-bullet"></div><p>One <strong>key Amazon FMCG topic</strong> each month — specific enough to attract, broad enough to resonate</p></div>
+          <div class="format-item reveal reveal-delay-2"><div class="format-bullet"></div><p><strong>Nick Comer</strong> and <strong>Sophie Smith</strong> host — the expert voices, the points of view</p></div>
+          <div class="format-item reveal reveal-delay-3"><div class="format-bullet"></div><p><strong>One rotating guest</strong> per episode — an FMCG brand leader, Amazon insider, or category specialist</p></div>
+          <div class="format-item reveal reveal-delay-3"><div class="format-bullet"></div><p><strong>Brendan</strong> produces the first 2–3 episodes, with a structured handover to the internal team</p></div>
+          <div class="format-item reveal reveal-delay-4"><div class="format-bullet"></div><p>Primary audience: <strong>UK FMCG brand decision-makers</strong>, with secondary reach to Amazon internal stakeholders</p></div>
+        </div>
+      </div>
+      <div class="format-tone-box reveal reveal-delay-2">
+        <span class="label">Tone</span>
+        <h3>Honest, direct, insider.</h3>
+        <p>Not polished corporate content. The kind of conversation you'd have at a trade show, on the record.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5 — CADENCE -->
+<section class="cadence-section" id="slide-4">
+  <div class="section-inner">
+    <div class="cadence-header">
+      <span class="label reveal">Monthly Cycle</span>
+      <h2 class="reveal reveal-delay-1">The 4-Week Cadence</h2>
+    </div>
+    <div class="cadence-grid">
+      <div class="cadence-card reveal"><div class="cadence-week">Week 1</div><h4>Pick the Angle</h4><p>Choose the one Amazon FMCG topic brands care about most this month. Lock the headline, confirm the guest, agree the core point of view. Identify the tension.</p><div class="cadence-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      <div class="cadence-card reveal reveal-delay-1"><div class="cadence-week">Week 2</div><h4>Build &amp; Promote</h4><p>Create the LinkedIn event page. Push value-first promotion. Personal outreach divided amongst the senior team — reaching all clients and target prospects.</p><div class="cadence-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      <div class="cadence-card reveal reveal-delay-2"><div class="cadence-week">Week 3</div><h4>Run the Anchor Event</h4><p>Nick, Sophie, and the guest lead the point of view. 4–5 structured questions prepared in advance. Focus on education, not selling. One clear takeaway.</p><div class="cadence-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      <div class="cadence-card reveal reveal-delay-3"><div class="cadence-week">Week 4</div><h4>Repurpose &amp; Convert</h4><p>Turn the session into 2–3 short clips, one quote card, one summary article, and a follow-up email. Warm leads get a personal follow-up within 48 hours.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6 — GOALS -->
+<section class="goals-section" id="slide-5">
+  <div class="section-inner">
+    <div class="goals-grid">
+      <div class="goals-left">
+        <span class="label reveal">In One Word</span>
+        <div class="goals-word reveal reveal-delay-1">Trust.</div>
+        <div class="goals-list">
+          <div class="goals-list-item reveal reveal-delay-2"><div class="goals-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><p>Own the "Amazon FMCG" thought leadership conversation in the UK</p></div>
+          <div class="goals-list-item reveal reveal-delay-2"><div class="goals-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><p>Attract the right ICP brand leaders into Rosetta's world</p></div>
+          <div class="goals-list-item reveal reveal-delay-3"><div class="goals-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><p>Earn trust before the commercial conversation starts</p></div>
+          <div class="goals-list-item reveal reveal-delay-3"><div class="goals-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><p>Turn registrant engagement into warm follow-up pipeline</p></div>
+          <div class="goals-list-item reveal reveal-delay-4"><div class="goals-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><p>Create a repeatable content engine for website and social</p></div>
+        </div>
+      </div>
+      <div>
+        <span class="label reveal">Success Metrics</span>
+        <h3 class="reveal reveal-delay-1" style="margin-top:12px;margin-bottom:24px;">By Episode 3</h3>
+        <div class="metrics-grid">
+          <div class="metric-card reveal reveal-delay-2"><div class="metric-value">50–75+</div><div class="metric-label">Registrants<br>per episode</div></div>
+          <div class="metric-card reveal reveal-delay-2"><div class="metric-value">20–30+</div><div class="metric-label">Live<br>attendance</div></div>
+          <div class="metric-card reveal reveal-delay-3"><div class="metric-value">8–10+</div><div class="metric-label">Follow-up<br>conversations</div></div>
+          <div class="metric-card reveal reveal-delay-3"><div class="metric-value">3–4</div><div class="metric-label">Content pieces<br>per episode</div></div>
+        </div>
+        <div class="metric-card reveal reveal-delay-4" style="margin-top:16px;text-align:left;padding:24px;">
+          <p style="font-size:0.92rem;"><strong style="color:var(--charcoal);">Pipeline attribution:</strong> By end of 2026, trace a meaningful share of new conversations back to series touchpoints</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7 — EPISODES -->
+<section class="episodes-section" id="slide-6">
+  <div class="section-inner">
+    <div class="episodes-header">
+      <span class="label reveal">Season One</span>
+      <h2 class="reveal reveal-delay-1">Episode Plan — May to October 2026</h2>
+    </div>
+    <div class="episode-featured reveal reveal-delay-1">
+      <div>
+        <span class="episode-featured-badge">Episode 01 — Launch</span>
+        <h3>Breaking Through on Amazon as an FMCG Brand</h3>
+        <p style="font-style:italic; color: var(--orange); font-size: 0.95rem; margin-bottom: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500;">What makes scaling hard, and what it takes to push through.</p>
+        <p>Most FMCG brands on Amazon are building without a safety net. No dedicated account manager, no proactive guidance, no one calling to say something's wrong. In this first episode, we hear directly from a brand that navigated that reality — what they learned along the way, what cost them money, and what they'd do differently if they were starting again today.</p>
+        <div class="episode-featured-meta">
+          <span class="episode-featured-meta-item"><strong>Date:</strong> Tue 5 May, 12pm</span>
+          <span class="episode-featured-meta-item"><strong>Guest:</strong> FMCG brand leader sharing their Amazon journey</span>
+        </div>
+      </div>
+      <div class="episode-questions">
+        <div class="episode-q">What does the day-to-day reality of Amazon actually look like for an FMCG brand that's doing it without dedicated support?</div>
+        <div class="episode-q">What's the thing that fell through the cracks that you really didn't see coming?</div>
+        <div class="episode-q">Walk us through a moment when you realised the channel was working against you — and what you did about it.</div>
+        <div class="episode-q">If you were advising a brand starting out on Amazon today, what's the one thing you'd tell them to get right from day one?</div>
+        <div class="episode-q">What does success on Amazon actually look like for an FMCG brand your size — and how did your definition of that change?</div>
+      </div>
+    </div>
+    <div class="episodes-grid">
+      <div class="episode-card reveal"><div class="episode-card-month">June 2026</div><h4>The Chargeback Problem</h4><p>Why Amazon is taking money from your business every month — and what you can do about it</p></div>
+      <div class="episode-card reveal reveal-delay-1"><div class="episode-card-month">July 2026</div><h4>Amazon Advertising for FMCG</h4><p>Why your spend isn't working and what to do differently</p></div>
+      <div class="episode-card reveal reveal-delay-2"><div class="episode-card-month">August 2026</div><h4>Pricing &amp; Brand Value</h4><p>Your brand on Amazon is cheaper than in Tesco. Here's why — and how to fix it</p></div>
+      <div class="episode-card episode-card--live reveal reveal-delay-3"><span class="episode-live-badge">Live in London</span><div class="episode-card-month">September 2026</div><h4>TikTok to Amazon</h4><p>The new FMCG growth playbook — live, in-person, with networking</p></div>
+      <div class="episode-card reveal reveal-delay-4"><div class="episode-card-month">October 2026</div><h4>Beyond the UK</h4><p>What FMCG brands get wrong expanding to Amazon Germany, Ireland, and Australia</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8 — PRODUCTION -->
+<section class="production-section" id="slide-7">
+  <div class="section-inner">
+    <div class="production-grid">
+      <div class="production-left">
+        <span class="label reveal">How It Gets Made</span>
+        <h2 class="reveal reveal-delay-1">Production Model</h2>
+        <div class="role-block reveal reveal-delay-2"><div class="role-name">Nick Comer &amp; Sophie Smith</div><div class="role-desc">Hosts and expert voices. 1.5 hours per episode (45 min prep + 45 min live). Personal outreach to their networks and all existing clients.</div></div>
+        <div class="role-block reveal reveal-delay-3"><div class="role-name">Brendan Hughes <span class="role-tag role-tag--orange">Episodes 1–3</span></div><div class="role-desc">Series producer for the first 2–3 episodes. Episode planning, run-of-show writing, post-event content direction. Structured handover with templates and playbook.</div></div>
+        <div class="role-block reveal reveal-delay-3"><div class="role-name">Internal Team <span class="role-tag role-tag--pink">Episodes 4+</span></div><div class="role-desc">Takes on production using established templates, processes, and cadence from the first three episodes.</div></div>
+        <div class="role-block reveal reveal-delay-4"><div class="role-name">Production Support</div><div class="role-desc">Freelance video editor / producer for clips and repurposing. Est. &pound;300–500 per episode.</div></div>
+      </div>
+      <div>
+        <h3 class="reveal">Content Output Per Episode</h3>
+        <div class="output-grid">
+          <div class="output-item reveal reveal-delay-1"><div class="output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div><p><strong>Full recording</strong><br>On-demand via website</p></div>
+          <div class="output-item reveal reveal-delay-1"><div class="output-icon output-icon--pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div><p><strong>2–3 short clips</strong><br>60–90s for LinkedIn</p></div>
+          <div class="output-item reveal reveal-delay-2"><div class="output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><p><strong>1 quote card</strong><br>For social sharing</p></div>
+          <div class="output-item reveal reveal-delay-2"><div class="output-icon output-icon--pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><p><strong>1 summary article</strong><br>500–700 words for Insights</p></div>
+          <div class="output-item reveal reveal-delay-3"><div class="output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><p><strong>1 follow-up email</strong><br>To all registrants</p></div>
+        </div>
+        <div class="channels-list reveal reveal-delay-3">
+          <h3>Distribution Channels</h3>
+          <div class="channel-tags">
+            <span class="channel-tag">LinkedIn Live</span>
+            <span class="channel-tag--outline channel-tag">Email (existing clients)</span>
+            <span class="channel-tag--outline channel-tag">Senior team outreach</span>
+            <span class="channel-tag--outline channel-tag">Rosetta Brands website</span>
+            <span class="channel-tag--outline channel-tag">Personal LinkedIn profiles</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9 — TIMELINE -->
+<section class="timeline-section" id="slide-8">
+  <div class="section-inner">
+    <div class="timeline-header">
+      <span class="label reveal">Launch Plan</span>
+      <h2 class="reveal reveal-delay-1">Timeline</h2>
+    </div>
+    <div class="timeline-track">
+      <div class="timeline-item reveal"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-event">Farm Shop &amp; Deli Show — promote the series, collect sign-ups</span><span class="timeline-date">13–15 April 2026</span></div></div>
+      <div class="timeline-item reveal reveal-delay-1"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-event timeline-event--highlight">Launch campaign — email, website, social <span class="timeline-tag timeline-tag--orange">Launch</span></span><span class="timeline-date">w/c 20 April 2026</span></div></div>
+      <div class="timeline-item reveal reveal-delay-1"><div class="timeline-dot--muted timeline-dot"></div><div class="timeline-content"><span class="timeline-event">Episode 01 promotion window</span><span class="timeline-date">20 April – 5 May</span></div></div>
+      <div class="timeline-item reveal reveal-delay-2"><div class="timeline-dot--pink timeline-dot"></div><div class="timeline-content"><span class="timeline-event timeline-event--highlight">Episode 01 — Breaking Through on Amazon as an FMCG Brand</span><span class="timeline-date">Tuesday 5 May, 12pm</span></div></div>
+      <div class="timeline-item reveal reveal-delay-2"><div class="timeline-dot--muted timeline-dot"></div><div class="timeline-content"><span class="timeline-event">Episode 02 — The Chargeback Problem</span><span class="timeline-date">Tuesday 2 June</span></div></div>
+      <div class="timeline-item reveal reveal-delay-3"><div class="timeline-dot--muted timeline-dot"></div><div class="timeline-content"><span class="timeline-event">Episode 03 — Amazon Advertising for FMCG</span><span class="timeline-date">Tuesday 7 July</span></div></div>
+      <div class="timeline-item reveal reveal-delay-3"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-event timeline-event--pink">Handover to internal team <span class="timeline-tag timeline-tag--pink">Handover</span></span><span class="timeline-date">July 2026</span></div></div>
+      <div class="timeline-item reveal reveal-delay-3"><div class="timeline-dot--muted timeline-dot"></div><div class="timeline-content"><span class="timeline-event">Episode 04 — Pricing &amp; Brand Value</span><span class="timeline-date">Tuesday 4 August</span></div></div>
+      <div class="timeline-item reveal reveal-delay-4"><div class="timeline-dot--pink timeline-dot"></div><div class="timeline-content"><span class="timeline-event timeline-event--pink">Episode 05 — TikTok to Amazon <span class="timeline-tag timeline-tag--pink">Live in London</span></span><span class="timeline-date">September 2026 (TBC)</span></div></div>
+      <div class="timeline-item reveal reveal-delay-4"><div class="timeline-dot--muted timeline-dot"></div><div class="timeline-content"><span class="timeline-event">Episode 06 — Beyond the UK</span><span class="timeline-date">Tuesday 6 October</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10 — ACTION PLAN -->
+<section class="action-section" id="slide-9">
+  <div class="section-inner">
+    <div class="action-header">
+      <span class="label reveal">What Happens Next</span>
+      <h2 class="reveal reveal-delay-1">Action Plan</h2>
+    </div>
+    <div class="action-columns">
+      <div>
+        <div class="action-col-header action-col-header--orange reveal">
+          <div class="action-col-icon action-col-icon--orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <span class="action-col-title">Nick &amp; Sophie</span>
+        </div>
+        <div class="action-list">
+          <div class="action-item reveal reveal-delay-1"><div class="action-checkbox"></div><p><strong>Confirm Episode 01 guest</strong> — an FMCG brand leader with a real, honest Amazon journey to share</p></div>
+          <div class="action-item reveal reveal-delay-1"><div class="action-checkbox"></div><p><strong>Set up LinkedIn Live</strong> access on Rosetta Brands company page</p></div>
+          <div class="action-item reveal reveal-delay-2"><div class="action-checkbox"></div><p><strong>Post teasers</strong> on LinkedIn the week before Episode 01 — topic hook, no product pitch</p></div>
+          <div class="action-item reveal reveal-delay-2"><div class="action-checkbox"></div><p><strong>Senior team outreach</strong> — divided amongst the team, reaching all existing clients</p></div>
+          <div class="action-item reveal reveal-delay-3"><div class="action-checkbox"></div><p><strong>Email the client base</strong> with the event link (Sophie leads distribution)</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="action-col-header action-col-header--pink reveal">
+          <div class="action-col-icon action-col-icon--pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+          <span class="action-col-title">Brendan (Episodes 1–3)</span>
+        </div>
+        <div class="action-list">
+          <div class="action-item reveal reveal-delay-1"><div class="action-checkbox"></div><p><strong>Write full run of show</strong> for Episode 01 — intro script, 5 questions, CTA close</p></div>
+          <div class="action-item reveal reveal-delay-1"><div class="action-checkbox"></div><p><strong>Set up LinkedIn Live event page</strong> for Episode 01 — target late April go-live</p></div>
+          <div class="action-item reveal reveal-delay-2"><div class="action-checkbox"></div><p><strong>Coordinate outreach</strong> — divide target prospect list across senior team members</p></div>
+          <div class="action-item reveal reveal-delay-2"><div class="action-checkbox"></div><p><strong>Send Nick, Sophie, and guest</strong> prepared questions 48 hours before live date</p></div>
+          <div class="action-item reveal reveal-delay-3"><div class="action-checkbox"></div><p><strong>Build handover playbook</strong> — templates, processes, cadence doc for internal team to run Episodes 4+</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="action-footer reveal reveal-delay-4">
+      <p>Prepared by Brendan Hughes / Fractional Edge — March 2026</p>
+      <div style="margin-top:12px;"><img src="logo.webp" alt="Rosetta Brands" style="height:32px;"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => observer.observe(el));
+
+  const sections = document.querySelectorAll('section');
+  const dots = document.querySelectorAll('.nav-dot');
+  const logoFixed = document.getElementById('logoFixed');
+  const darkSlides = new Set([0, 4, 8]);
+
+  const secObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const i = Array.from(sections).indexOf(e.target);
+        dots.forEach((d, j) => {
+          d.classList.toggle('active', j === i);
+          d.classList.toggle('on-dark', darkSlides.has(i));
+        });
+        logoFixed.classList.toggle('show', i > 0);
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(s => secObs.observe(s));
+
+  dots.forEach(d => d.addEventListener('click', () => {
+    sections[parseInt(d.dataset.slide)].scrollIntoView({ behavior: 'smooth' });
+  }));
+
+  let cur = 0;
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); cur = Math.min(cur + 1, sections.length - 1); sections[cur].scrollIntoView({ behavior: 'smooth' }); }
+    else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); cur = Math.max(cur - 1, 0); sections[cur].scrollIntoView({ behavior: 'smooth' }); }
+  });
+
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) cur = Array.from(sections).indexOf(e.target); });
+  }, { threshold: 0.5 }).observe(document.querySelector('section'));
+  sections.forEach(s => new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) cur = Array.from(sections).indexOf(e.target); });
+  }, { threshold: 0.5 }).observe(s));
+})();
+</script>
+</body>
+</html>
